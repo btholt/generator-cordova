@@ -29,16 +29,31 @@ CordovaGenerator.prototype.askFor = function askFor() {
   '\n    /___A___\\   \'__________________________\'' +
   '\n     |  ~  |'.yellow +
   '\n   __' + '\'.___.\''.yellow + '__' +
-  '\n ´   ' + '`  |'.red + '° ' + '´ Y'.red + ' `\n';
+  '\n ´   ' + '`  |'.red + '° ' + '´ Y'.red + ' `\n' +
+  '\n\nYeoman Cordova (Phonegap upstream) Generator'.red;
 
   console.log(welcome);
 
   var prompts = [{
-    name: 'someOption',
-    message: 'Would you like to enable this option?',
-    default: 'Y/n',
-    warning: 'Yes: Enabling this will be totally awesome!'
-  }];
+    name: 'projectName',
+    message: 'What is the name of your app?',
+    default: 'Some App'
+  },
+  {
+    name: 'iosApp',
+    message: 'Would you like to scaffold iOS?',
+    default: 'Y/n'
+  },
+  {
+    name: 'androidApp',
+    message: 'Would you like to scaffold Android?',
+    default: 'Y/n'
+  },
+  {
+    name: 'blackberryApp',
+    message: 'Would you like to scaffold Blackberry?',
+    default: 'Y/n'
+  },];
 
   this.prompt(prompts, function (err, props) {
     if (err) {
@@ -53,7 +68,16 @@ CordovaGenerator.prototype.askFor = function askFor() {
 
 CordovaGenerator.prototype.app = function app() {
   this.mkdir('app');
-  this.mkdir('app/templates');
+  this.mkdir('app/css');
+  this.mkdir('app/img');
+  this.mkdir('app/js');
+  this.copy('_index.html', 'app/index.html');
+  this.copy('_index.css', 'app/index.css');
+  this.copy('_index.js', 'app/index.js');
+  this.copy('_config.xml', 'app/config.xml');
+
+  this.mkdir('platforms');
+  this.mkdir('merges');
 
   this.copy('_package.json', 'package.json');
   this.copy('_component.json', 'component.json');
